@@ -1,0 +1,2 @@
+javac -classpath acm.jar <filename.java>
+java -cp .;acm.jar <filename.class>

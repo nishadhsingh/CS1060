@@ -1,0 +1,4 @@
+lecture 9 notes:
+
+1 . when objects are passed as arguments , their refrence is passed rather than a copy.
+2.Class variables : variable shared by all objects of that class, specified by using keyword 'static'.

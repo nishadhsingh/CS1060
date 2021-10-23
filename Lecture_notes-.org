@@ -1,0 +1,1192 @@
+#+STARTUP: indent overview hidestarts
+#+TITLE:Lecture Notes
+* TODO Complete
+
+
+* Karel-the-robot
+** Chapter 1
+*** Karel's world
+The World is defined by streets (columns) and avenues(rows), the intersection of a street and a avenue is called a coner.
+Karel can only be placed in a corner, facing one -of the cardinal directions.
+Karel's world can have a "beeper" which are cones which emit beeping noise karel can only sense beeper when it's in the same corner as the beeper, and walls . Karel can't crossover walls and must go around them and the world is also encircled by a continous wall.
+
+*** In Built functionality
+
+karel has a set of built-in commands:-
++ move() : karel move one block in the direction it's facing.
++ turnLeft(): karel turns 90 deg counterclockwise.
++ pickBeeper(): pick beeper at the current corner in put in bag.
++ putBeeper(): put a beeper down from bag in the current corner.
+
+
+*** Misc
+Karel programs must obey the syntatic rules of karel programming language which are similar to java.
+'()' parentheses signifies invocation of a command, in karal's language and java.
+ if Karel does something illegal an error condition flashes with an error message.
+
+*** Object-Oriented Paradigm
+
+In '70's the programing approach was the Procedural paradigm i:e; decomposing the problem in smaller chunks called procedures.Now a day although decomposing problem in small chucks still remain a central approach in programming but, languages like java and Karel follow the approach called Object-oriented programming.
+
+Object-oriented programming (OOp) is a approach in which problem is modeled through conceptually integrated units called objects, these objects can represent real world objects or abstract concepts.
+
+In OOp paradigm the programmer thinks in terms of objects their states and interaction with other objects and world.An Object stores it's state as a set of  attributes eg:- Karel might store it's state as beeper count and position.The Behaviour of an object is the way it changes it's state in response to events in world or message/command from other objects.An command/message may trigger a state change eg :- move() // tells karel to change it's state.
+
+**** Karel as an object
+
+Karel's attributes/properties that define Karel's state are it's location,direction it's facing and number of beepers in the beeper bag.
+Karel's Behaviour is defined by it's commands : move(),turnLeft().pickBeeper() and putBeeper().
+
+*** Object and Class
+
+An Class is an template for an object , which defines all the attributes and behaviour of that object . ~karel~ represents a class of robots which can move(),turnLeft() etc.
+When a Karel program runs it's an specific instance(object) of Karel class
+
+** Chapter 2
+
+A Karel program consits of definition of a new Karel Class that specifies a sequence of built-in commands ,that are executed when program is run.
+
+A Comment is lines of text which are ignored by the compiler, and are only present to aid readablity and understanding of the program.
+#+begin_src java
+   /* Comment start
+    * comment another line
+    * Comment another line
+    */
+#+end_src
+
+Comments in both java and Karel start with /* and end with * / charaters, and *s at the beginning of lines are are for readability.The objective of comments are to document the design of larger programs.
+
+
+An Import statement requests inclusion of all definitions in the stanford.karel library.
+~import stanford.karel;~
+
+inclusion of this library is necessary as it contains the definition of the basic karel class and operations such as move().
+
+** Class definition
+
+#+begin_src java
+    public class BeeperPickingKarel extends Karel {
+      public void run() {
+        move();
+      pickBeeper();
+    move();
+  }
+      }
+
+#+end_src
+
+*** Class Header
+
+The first line of the class definition is called a Header and the rest part is called body.
+
+~public class BeeperPickingKarel extends Karel {~
+                      body  of class definition
+~}~
+
+The word ~extends~ indicates that the new class definition is an extension of an existing whose name follows extends which in this case implies that BeeperPickingKarel is an extension of an existing class definition  Karel from the stanford.karel library.
+
+BeeperPickingKarel being an extension of Karel class , gurantees that any instance of BeeperPickingKarel will also have the state attributes and behaviours defined in Karel.eg:- an instance of Karel lives in a world with streets and avenues , and responds to commands such as move(),pickBeeper() therefore  any instance of BeeperPickingKarel will also live in a world of streets() and avenues() and will respond to commands such as move().
+
+The process of BeeperPickingKarel accuring state attributes and behaviour of Karel is called Inheritance.A class defined as an extension of an class is called a subclass of the original and the original class is called an superclass of the extended class.
+
+
+
+
+***  method definition 
+
+Class definition Body
+#+begin_src java
+      public void run() {
+        move();
+        pickBeeper();
+        move();
+      } 
+#+end_src
+
+The class definition body contains a method definition. A method definition also contains a Header and a body.
+
+~public void run() {~
+    body of method definition
+  ~}~
+
+~public~ and ~void~ are part of Karel and java's syntactic structure.
+The next word on header specifies the name of the method , which in this case is run.
+A method definition becomes a new command with that name. Class Karel responds to commands move,pickBeeper and putBeeper Class BeeperPickingKarel responds to Karel's command as well as run command.
+The effect of issuing a command is defined by  the body of the method, which in case of run issues another set of commands as as move(),pickbeeper(),move(),putBeeper().
+
+The ability to define methods allows us to break larger problems into smaller problems which are easier to solve. This process is called decomposition and component parts of lare problem is called subproblems.Decomposition stragedy Each subproblem should perform a conceptually simple task and each subproblem should perform a task that is general is possible so it can be reused.
+
+
+*** Information hiding
+
+A method which is marked private in it's header cannot be accessed outside of the class , but a method marked public can be accessed outside the class.
+
+The reason that access to a method is restricted because as design principle classes should try to encapsulate i;e only only gather it in one place but also restirct access to it, this is done to reduce complexity  by hiding as much detail as possible.
+
+The principle of hiding extraneous detail is called *information hiding* and is the cornes stone philosophy of Object oriented programming.
+
+
+
+
+*** Control Statements in Karel
+
+Control statements change the order in which the program executes , and have two types :-
+
+- Conditional Statements : Conditional statement specify a block of statements that should only be executed if a particual condition in true. In karel this is achived with if statement.
+
+- Iterative statements : Iterative statements specify that certain statements in a program should be executed repeatedly , forming what is called a loop.Karel and java support looping by for and while statements.
+
+**** Conditional Statements
+
+If statement is used to perform checks in the context of a program.if statement has the following form.
+
+if (conditional test) {
+                                     statements to be executed if conditions are met
+                                     }
+
+Karel can perform a variety of tests such a is frontClear and frontisBlocked
+~if(conditional test)~ is the header for conditional statement.statements enclosed in brackets represent body of control statement.
+
+if statement can be extended by
+~if( conditional test) {~
+                                        statements to be executed when test is true.
+                                        ~} else {~
+                                        statements to be executed when test is false.
+                                        ~}~
+
+**** Iterative statemens
+
+Iterative statements are used to loop over (execute a group of statements repeatedly). In Karel and java if the number of repeatitions required is known then a for statement is used.
+~for (int i = 0; i<count;i++) {~
+           statement to be repeated
+           ~}~
+
+count is number of times loop is to be executed.i;e number of repetions .
+
+
+if the number of repeatitions is not known then a while statement is used, a while statement has the following form:
+
+~while(conditional test){~
+          statements to be repeated
+          ~}~
+
+a while statement repeats the statements until conditional test is false.
+
+
+
+*** Solving general problems
+
+a program should be written such that it should be able to work with a few as minimum as possible constrains.
+
+- fencepost error :: The name comes from the fact that it takes one more fence post that you might think to fence off a particular distance. How many fence posts, for example, do you need to build a 100-foot fence if the posts are always positioned 10 feet apart? answer is counter intuitively 11.
+
+A general stragedy for fencepost type problems is:-
+~while (frontIsClear()) {~
+              perform some operation.
+              ~move()~
+              ~}~
+preform the same operation for final fence.
+Such general stragies which are frequently used in programming are called programming patterns or programming idoms.
+
+** Chapter 4  Stepwise Refinement
+
+Software Engineering was developed as a set of methodologies that are aimed to make computer programs easier to read,maintain and develop.
+
+top-down design or stepwise refinement is the stragedy of staring with problem as a whole and decomposing them into smaller problems , and breaking those down into smaller pices if necessary
+
+*** Principle of top-down design
+
+The idea in step-wise refinement is that you should start the design of your program from the top , which is the conceptually highest level of abstraction.
+
+*** Preconditions and Postconditions
+- Precoditions :: Conditions that must be true before a method/function is executed.
+- PostConditions :: Conditions that must apply after method finishes.
+
+** Chapter 5 Algorithms
+
+Algorithmic design process of designing a solution stragedy.
+An Algorithm is a solution stragedy that meets the following conditions:-
+- expressed clearly and unambigiously.
+- steps in stragedy can be carried out.
+- stragedy always terminates after a finite number of steps.
+
+
+
+* Lecture 1
+
+** CS160A Introduction
+Programming Methodology
+
+Software engineering != Programming 
+CS106A = programming methodology java
+CS106B = Programming methodology continued
+CS106X = CS106A+CS106B
+
+** History
++ first Bug Mark 2 1945
+** Karel
+simple digital robot , lives in a grid world can move one point on grid to another - can pickup square shaped "beepers" and place them in world , world can have walls that karel can't jump.
+* Lecture 2
+
+** Bits
++ algorithm is a recipie
++ program syntactically valid description of algorithm in a language.
++ Program should be people readable.
+
+
+
+
+** Karel
+
+*** Karel Methods
+
+karel respods to methods
++ Move
++ turnLeft(90 deg)
++ pickBeeper
+
+
+
+
+* Lecture 3
+
+** Common Errors 
+
+Infinite loop :- a programming error in which a loop keeps executing repeatedly forever.
+
+Of By One Bug :- (obob) is a fencepost type error.
+
+** Comments
+Comments explain things which are not obvious and define preconditions and postconditions.
+
+** Decomposition
+- solve 1 problem per method
+- Discriptive names
+- comments
+
+
+
+* Lecture 4
+
+Compilation is translation of high level language to machine language.
+
+Graphics program :
+- collage - starts as blank canvas and Graphics objects are added to it.
+
+  
+* Lecture 10
+ 
+  
+* Art and Science of Java by Eric Roberts
+
+**  Ch 1 Introduction
+
+*** 1.1 history
+- First gen : large , vacume tube based
+- second gen : transistor based
+- Third gen : Integrate circuits
+- fourth gen : large-scale integration , microprocessors
+
+*** 1.2 What is Computer Science
+
+Computer Science pertains to software and problem solving in such a way that the solution utilizes computer hardware , more or less computer science is a science of problem solving using software programming and computer hardware.
+
+*** 1.3 Brief Tour of Computer Hardware
+
+**** CPU
+
+ The central processing unit (CPU) is the 'brain' of computer.The cpu performs the computations and coordinates actions in between different parts of the computer . The program that cpu executes is a series of coded instructions which are stored in memory. cpu consists of an integrated circuit which is a chip of silicon that has microscopic transistors impriented on it.
+
+**** Memory
+
+A Computer stores the program and data is a storage device, the storage device used to store current program and data is called primary storage(often called memory).
+In modern computers primary storage is a silicon chip called RAM(random access memory) which allows the cpu to access any memory location at any time.
+
+**** Secondary Storage
+
+The primary storage is volatile and only functions when computer is running , therefore to store data permanently Secondary storage is used which is able to store data even when computer is turned off.
+
+**** Input/Output devices
+
+Input Output devices allow a computer to send and recive data to and from outside world these devices are called i/o devices
+
+**** Network.
+
+Network is an connection to an constellation of other computers together they form the internet.
+
+
+*** 1.4 Algorithms
+
+An Algorithm is an stragedy to solve a problem.
+An Algorithm must satisfy the following criteria:-
+- Clearly and unambigiously defined
+- effective and executable.
+- Finite ie; must terminate after a finite number of steps.
+
+*** 1.5 Stages in the programming process
+
+The first step is programming is to figure out a solution stragedy that is to design an algorithm or use and existing one this part is called *algorithmic design.*
+The second step is to express that algorithm as a program written in a programming language , this part of process is called *coding*.
+
+*Creating and editing programs*
+To create a program you have to first store the program text in a file called a source file. A source file will have an appropiate extension according to the programming language used , for java the extension is .java.
+
+**** The compilation process
+
+Languages like java are an example of high-level languages , these languages make expressing algorithms without understanding hardware possible.
+A program written in a high-level language is translated to lower-level language which is usually varies from one type of  computer hardware to another.
+A Computer hardware's specifity language is called machine language.
+
+In order to make one program to run on two different hardware systems two approaches are used : -
+
+- Compiler : - A compiler translates the program into the machine language for that specific system , and different compilers are required for different hardware systems.
+  In a Compiler based system  the compiler translates source file into second file called an object file that contains corresponding instruction of that system , this file is then combined with other object files in process called linking , and merged in a single executable file that can be executed on system.
+- An intermediate Language is used in between machine and programming language which is independent of hardware. These intermediate language programs are executed by interpreters which implement intermediate language on that machine.
+
+In Java an hybrid approach is used , first a program is translated into an intermediate language(class file) which is hardware independent which is interpreted by JVM(java virtual machine) , the jvm compiles part of that intermediate language into machine language.
+When all required class files are linked together they merge into a single file called a jar archive which is then interpreted by jvm.
+
+**** Programming errors and debugging
+
+Compilers also check the syntax of the programming language, to ensure that grammer rules of the programming language are obeyed.If syntax rules are not obeyed then compiler generates syntax errors and dosen't complete the compilation.
+
+Logical errors result when program has an logical flaw and dosen't perform according to specification.
+
+Logical errors are often called Bugs and processing of removing the is called debugging.
+
+**** Software maintenance
+
+Software needs mainntenance in two aspects:-
+- Bug fixs
+- feature enhancement
+
+Software engineerng is a decipline of producing software that is easy to understand i;e readable so that it can be maintained by others 
+
+
+
+** Ch 2 Programming by Example
+
+*** 2.1 Hello world program
+
+#+begin_src 
+  /*
+   * File: HelloProgram.java
+   * -----------------------
+   * This progarm displays "hello world" on the screen.
+   * it's inspired by K and R 's hello world program
+   * this is a multiline comment
+   */
+
+   import acm.graphics.*;
+   import acm.program.*;
+
+   public class HelloProgram extends GraphicsProgram {
+          pubilc void run(){
+                add(new Glabel("hello, world" , 100 ,75));
+          }
+    }
+
+#+end_src
+
+Comments describe the pourpose and details of the program.
+imports describe the libraries used.
+the main class is a class definition which is a template for object creation.
+
+*Variable* is a placeholder name for data.
+a declaration is a statement that specfies the name of the variable , and the type of data the variable will hold.eg ~int nl =~ ~value;~
+
+floating point numbers are used to approximate real numbers , in java floating point type is double(double precision floating point).
+
+*** 2.4 Programming idoms and patterns
+Programs often can be viewed as a composition of different programming patterns and idoms , which can be used in a program without worring about it's internal working , such conceptual units allow to think about a program in a holistic way ie; as a composition of patterns and idoms.eg:
+~type variable = readType("prompt");~
+
+*** 2.5 Classes and objects
+
+A Class is an extensible template for a type of object, each object is an instance of a predefined class . An Object is a conceptual grouping of  *state* and *behaviour*
+the state of an object is stored as a set of attributes , and behaviour is the way object responds to a *message* (anything that triggers a behaviour) . In java sending a message to an object corresponds to a method call for that particual object ie; a method call is a message in java.
+
+*Class hierarchy*
+A Class B which is an extension of Class A is called sub-class and class A is called superclass.
+
+A instance of a class is also an instance of all of it's superclasses this property is called inheritance.
+
+*** 2.6 Graphical programs
+
+Basic idoms of GraphicsProgram Library
+
+Objects can be associated to variable names via
+Classname(type) var-name = new classname(args to constructor)
+eg: ~GLabel msg = new GLabel("hello , world" , 100 ,75)~
+
+*Sending messages to objects*
+
+Naming objects allows to sends messages to objects via method calls , object can be specified with name.Object to which message is directed is called a *reciver* .
+Pattern for a method call which a explicit reciver is :
+~reciver.name(arguments)~
+
+where ~reciver~ is the object message is directed to and ~name~ is name of method which responds to the message ~arguments~ is a may be empty list of values passed to ~reciver~.
+
+
+font is the encoding which maps charaters into images that apper on screen.
+java fonts are composed of three charateristics : - family name(times,helvetica),
+style(bold/italic) , point size(integer indicating the size of the charaters using the standard printers's unit of point, which is equal to 1/72 of an inch).
+
+*Gobject class hierarchy*
+- GObject
+  - GLabel
+  - GRect
+  - GLine
+[[file:GObject-CLass-refrence.jpg][GObject Class Ref]]
+
+- java coordinate system :
+  - (0,0) origin is upper left
+  - units are pixels
+
+
+
+
+
+** Ch3 Expressions
+
+An Expressions is a sequence of operations. In Java an expression is composed of terms and operators , term is a data value and operator is a charater which indicates an computational operation.
+
+- In java a term can be one of the following :
+  - A constant :: an explicit data value , such as pi,tu
+  - A variable :: placeholder for data
+  - A method call :: values are often generate as a result of method call.
+  - An parenthesis enclosed expression :: an expression enclosed in parenthesis is a grouped and treated as a term, like in mathematics.
+
+
+Executing all operations is called evaluation after which the remaning value is called the result of evaluation of expression.
+
+*** 3.1 Primitive data types
+data types which fall outside of object hierarchy are called primitive data types.
+java compiler needs to know data type of each data unit, a data type is defined by two properties : a set of values(domain) and a set of operations.
+
+Java defines eight primitive data types : - byte , int , short , long for integers of different size ranges .
+
+data types :- float and double - are floating point numbers with different ranges.
+
+data type : - char is for charaters.
+
+data type:- boolean (true/flase).
+[[file:java-primitiv-data-type-ref.jpg][java primitive data type ref]]
+
+*** 3.2 Constants and variables
+
+constants are explicit values which do not change , during execution and variables are placeholders for data that might change.
+
+**** Constants
+- Int Constants : Int constants are simply written with their sign and without commas.
+- Floating point constants : floating point constants are written with decimal point . And can also be written by using progarmmers style scientific notation . eg 2.9979x10^8 = 2.9979E+8.
+- Boolean constants : either true or false.
+- String constants : charaters enclosed in double quotes " Hello, world".
+
+**** Variables
+a variable is a placeholder and has three attributes : name type and value.
+
+Names in java are called identifiers and have the following rules :
+- start with letter or underscore, case sensitive.
+- all other charaters must be letters,numbers,underscores.
+- cannot be one of the reserved words.
+- identifiers should convey pourpos/meaning of the variable,class or method.
+- variable name should start with lowercase,class names with uppercase each word other than beginner word might start with a uppercase to improve readablity.
+
+**** Declarations
+declaration is introduction of a new variable in a progarm, and specifies it's name type and value.
+syntax of declaration is :-
+~type identifier = expression;~
+the expressions value is assigned to identifier.
+
+variables declared in a method are called local variables , and are only avilable in that method.
+variables declared in a class , but outside of any method are called instance variables /ivars are stored as part of each object.
+
+Class variables are declared as same as instance variables but include keyword static.
+
+**** Named constants
+a constant can be declared with syntax :-
+~private static final identifier = value;~
+private - variable only accessable in class.
+static - variable is a class variable.
+final - variable's value is final and won' t change . and can't be reassigend.
+identifier - entierly uppercase.
+
+*** 3.3 Operators and operands
+
+The standard arithmetic operators for numeric types are :- +,-,/,*
+An expression is formed when two expressions(subexpressions) are connected by a operator, the subexpressions are called operands of resulting expression.
+
+eg:- x+3 or (cx*y)+(2+e) .
+
+The - sign is subtraction when it has two operands , and becomes negation when there's only right operand , when used this way it's called a uninary operator(because it applies to only one operand). 
+other operators which work with two operands are called binary operators.
+
+**** Combining ints and floating point numbers.
+
+if int and double types are combined then if either or both the operands are double then the result is double.
+
+**** Integer division and the remainder operator
+for division operator if both operands are int then the result is always int , and the decimal part is thrown away.
+
+In java ~%~ operator returns remainder of first operand divided by second and same rules apply as for division operator.
+
+**** Precedence
+Java compiler applies operators using rules of precedence (if parenthesis is missing) or two operands apply to same operand.
+
+rules of precedence are for arithmetic expressions :-
+1. first apply any unary minus operators.
+2. then apply multiplicative operators (*,/,%) if two apply to same operand then left most one is applied first.
+3. apply additive operators (-,+). if two operators apply to same operand the left most one is applied first.
+
+**** Type conversion
+
+To convert one type to another use type casting
+int n = (int) 1.9999
+converting integer to floating point throws away the fraction which is called truncation.(also happens in integer division.)
+
+*** 3.4 Assignment statements
+
+In java to change a variable's value , a assignment statement is used.
+assignment statement syntax :-
+~variable = expression;~
+variable - variable you wish to set
+expression - specifies the new value
+the value of the expression on the right is stored in the variable on the left.
+
+In programming a group of variables associated with a particular  invocation of a
+method is called a *stack frame* .assignment statements change the value of variables in the current stack frame.
+
+**** Shorthand assignment operation
+
+assignment statements are so common that an shorthand(idiom) is defined for it .
+
+for an expression such as  ~variable = variable op variable;~
+where op is an binary operand , the shorthand is:
+~variable op= variable;~
+op= is shorthand assignment operator.
+
+**** Increment and Decrement operators
+Increment is adding 1 to a variable and decrement is subtracting one from a variable. Java has idioms for these operations
+~x++;~ is same as ~x = x +1;~
+and ~x--;~ is same as ~x= x-1;~
+
+*** 3.5 Boolean expressions
+
+In Java conditions which are either true or false can be expressed using Boolean expressions , Boolean values are expressed using type ~boolean~ which can have only two values ~true~ or ~false~ . Two major groups of operators work with boolean values are:
+
+**** Relational Operators
+These operators are used to compare two values , java defines six relational operators
+> , >= ,<,<= these appear in the precedence hiearchy below the arithmetic operators and are in turen followed by the operators  == and ! =
+
+these operators are only used to compare atomic data i,e data which cannot be decomposed in to individual units(ints,double,char,boolean) and produce only boolean values.
+**** Logical operators
+These operands take only boolean values and produce only boolean results:
+! not , && and , || or  are decreasing in order of precedence.
+
+*De Morgan's laws*
+~!(p||q)~  is equivalent to ~!p && !q~
+and ~!(p&&q)~ is equivalent to ~!p || !q~
+these are called de morgan's laws .
+
+*short-circuit evaluation*
+In Java boolean expressions are evaluated form left to right and ends as soon as answer can be determined , if the expression has form (exp1 && exp2) the evaluation ends as soon as value of exp1 is determined this is called short-circuit evaluation.
+
+conditions which protect against evaluation errors in subsequent parts of compound statements are called *guards*.
+
+*Flags*
+Variables of boolean type are called flags and can take values from boolean expressions.
+
+
+** Chapter 4 statement types
+*** 4.1 Statement types in java
+three types are :
+simple statements ; perform some action.
+compound statements ; combine other statements into a sequence of operations.
+control statements ; which affect the way other statements are executed.
+
+**** Simple statements
+In java simple statements usually  consists of an expression followed by semicolon. simple statements are usaually assignments or method calls.
+
+**** Compond statements
+In java a collection of statements is called a compound statement or a *block* which is enclosed in curly braces.
+
+**** Control statements
+Statements that affect the order in which other statements are executed are called control statements and they are of two categories:
+- Conditionals : a control statement which is used to make decision based on the result of some conditional test i;e to pick between different paths of execution . two conditional statements in java are ~if~ and ~switch~ statements.
+- Iteration : sometimes repeated execution of a group of statements is required such repetation is called iteration and code that's repeated is called a *loop* . In java two iteration statements are ~while~ and ~for~ statements.
+
+
+In Java the first line of control statement is called *control line* which specifies the control on the *body* which is a compound statement which is usually a block. conditionals can have multiple body block depending on the execution path they take.
+
+*** 4.2 problem solving and control statements
+*The repeat N-times pattern*
+~for (int i = 0; i < N ; i++){~
+         statements to be repeated
+ ~}~
+ a special value used to terminate loop is called a *sentinel*.
+
+ *read-until-sentinel pattern*
+ ~while (true) {~
+             prompt user and read in a value
+             ~if (value == sentinel) break;~
+             rest of body
+             ~}~
+*** 4.3 The if statement
+
+In java the if statement has two forms:
+if (condition) statement
+if (condition) statement1 else statement2
+the condition is a boolean expression , in java the if statement executes statement 1 if the condition evaluates to true , or executes statement2 if the condition evaluates to false.
+
+if statement 2 is not present then it skips the body of if entirely when condition is false.
+if the ~if~ statement has only one statement it's called if-then , if the ~if~ statement has two statements then it's called if-else clause.
+
+*dangling else problem*
+when it's difficult to determine the which else is associated with which if statement.
+
+*if/else blocking rule*
+for any if statement which is more than one line or has an else block , then body of if must be enclosed in brackets.
+
+**** ?: operator
+synatx: ~condition ? expression1 : expression2;~
+In java ?: is the shorthand form of the if-else satement i;e when condition is true expression1 is evaluated and when condition is false then expression2 is evaluated.this operator can be used as an expression itself.
+~max = (x>y) ? x : y;~
+
+*** 4.4 Switcht statement
+#+begin_src java
+  /*syntax of switch statement*/
+  switch (e){
+      case c1:
+          statements;
+          break;
+      case c2:
+          statements;
+          break;
+      default:
+          statements;
+          break;
+          }
+#+end_src
+e is the control expression , ci are the constant values and statements are statement blocks to be executed if e=ci, default statements are executed when e != any ci. i;e if one the constant matches the value of the control exp then the associated case clause is executed.
+
+a case line and all statement follow it in block are called a case clause. the default line and it's associated statements are called the default clause.there can only be one default clause.
+Each clause is terminated by a break statement if break statment is not included then the compiler simply continues executing the next case clause statements.
+
+*style guide:* if possible put the case identifier statements and break on the same line to enhance readablity.
+
+*** 4.5 While 
+#+begin_src java
+  while (condition){
+      statements
+          }
+#+end_src
+condition is a conditional test used to determine weather loop should continue for another cycle.
+block is the group of statements to be repeated.i;e block is executed repeatedly until condition becomes false.
+
+*infinite loop*
+all loop must terminate i;e the condition for while must eventually become false in order to for program to produce result successfully.
+
+*loop and a half problem*
+when loop contains some operations that must be performed before testing for completion , a loop can be exited in the middle by using a break statement in a if condition.
+
+*** 4.6 for statement
+#+begin_src java
+  for(init;test;step){
+      statements;
+      }
+#+end_src
+- where:
+  - init is a declaration which initializes the loop index variable.
+  - test is a conditional test used to determine wheather loop should continue or not.
+  - step is an expression used to prepare for next loop cycle.
+  - statements are the block of statements to be repeated.
+
+ the init,test and step are all optional but semicolons must be present, if init is missing no intialization is performed or if test is missing it's assumed to be true and if step is missing no action occurs in between cycles eg for(;;) is also valid.
+ avoid using floating point variable as a loop variable in for.
+
+
+
+
+** Chapter 5 Methods
+
+Information hiding is a programming principes in which only the revelant details are made visible in java, methods is mechanism which implements the principal of information hiding.
+
+arguments and results represent communication between a method and it's caller.
+Methods which are associated with class as a whole are called static methods such as Math.log(), also method calls can be treated as expressions.
+
+in java *this* keyword referes to the current object.
+
+ *method calls as message*
+in oops objects communicate by sending messages to each other, which corresponds to one object invoking a method that belongs to different object. the sender calls a method by sending message
+reciver.name(arguments) where name is name of method.
+
+*** Method syntax
+header syntax
+#+begin_src java
+  visibility type name (parameters){}
+#+end_src
+
+where visibility is typically public or private
+type is type of value returned or void if method returns no value.
+name is the name of method
+parameters is a list of parameters declarations.
+
+**** return statement
+~return expression;~
+specifies the value to be returned by the method.
+methods may used more than one return statement depending on the control statements used.
+
+**** predicate methods
+methods which return Boolean are called predicate methods,.
+
+variables which are declared in a method are meaningful only in the method that defines them hence they are called local variables.
+
+internally all the variables and parameters decaled within a method are stored together in a stack frame.
+
+when a method returns it continues from precisely the point at which the call was made computer referes to this point as return address.
+*** 5.4 decoposition
+Breaking up of programs in small pieces is called decomposition.
+a large program is broken in small subtasks using methods.
+
+a large program is broken in major subtasks , then each subtasks can be broken down in more subtasks at the end of this process each subtask can be solved with a method. this is called *top-down design or stepwise refinement*.
+
+because methods tie together specific statements so as to have a specific effect method provide the standart framework for expressing algorithms in java.
+
+there are many different algorithms for solving a particualar problem choosing the algorithm the best fits the application is an important part of your task as a programmer.
+
+
+** Chapter 6 Objects and Classes
+*** 6.1 RandomGenerator class
+A program whom's output is predictable for a set of input values is said to behave deterministically.
+programs that simualte random events are called nondeterministic programs.
+*Pseudorandom numbers*
+numbers that behave as random from a statistical point of view generated using
+deterministic procedure. these are called pseudorandom numbers.
+
+**** using Randomgenerator class
+random generator class getInstance method which returns a new instance of RandomGenerator class.
+syntax to used RandomGenerator
+~private RandomGenerator rgen = RandomGenerator.getInstance();~
+instance var rgen can be used throughout program to generate random numbers.
+eg: ~int die = rgen.nextInt(1,6);~
+
+**** Role of random number seed
+
+To generate random values the generator requires a starting point which is called a seed.
+be default seed is set to system clock value at the time but, setSeed() method allows to set seed for generator in order to produce random numbers deterministically which is some times useful in debugging.
+
+*** 6.2 javadoc documentation system.
+javadoc is a system which automatically scans through the code and generates the documentation for a given class.
+implementor : programmer who implements the class.
+client : programmer who uses the class.
+
+*** 6.3 Defining your own classes.
+
+*structure of class definition*
+#+begin_src java
+  public class name extends super {
+      class_body
+          }
+#+end_src
+
+name is the name of new class.
+super is the name of super class.
+class body includes constructors,named constants,methods and instance variables.
+
+every class intended to be used by clients is marked ~public~
+each public class definition should be in seperate file called name.java where name is the name of the class.
+~extends~ specifies the superclass from which new class inherits from.
+
+Object class is root superclass in java and everyclass extends Object class and every object in java is a instance of Object class.
+
+the definitions are called entries, in a class . A *constructor* specifies how to create new instance of the class, 1) name of the constructor is always the same as class and they don't have a return type .
+*instance variables* are like normal vars except they maintain state for objects and are declare at the beginnning of a class rather than in a method.
+
+**** visibility of entries
+entries are marked with visiblity to control what classed have access to entries.
+in java visiblity is controlled with three keywords in a class:
+- public :: Visible to every class in program.
+- private :: Visible only within the class that defines it.
+- protected :: Visible only to subclasses and classes in the same package.
+
+ entries without a keyword are packged-private and are only visible to classes in a package but not subclasses.
+
+ entries marked public are said to be *exported*. all entries should be made private unless necessary.
+
+ 
+
+
+
+
+
+
+
+**** Encapsulation
+Class combine related pices of data into a single conceptual unit eg GPoint class in acm.graphics combines x coorditnate and y coordinate to give a point which can be mainpulated as a single entity.
+Thus combining several data values into a single obj is part of the process which is called Encapsulation which also protects data from unwranted access.
+
+*** 6.4 Representing student information.
+**** writing javadoc comments
+comments beginning with /** are read by javadoc system, the descriptions with @param and @result tags appear in the javadoc comment.
+**** writing the constructor.
+constructor has same form as method definition except it lacks return type
+Clients invoke the constructon with the ~new~ keyword name of class and list of args to match params.eg:-
+~Class_name var_name = new Class_name(arg1,arg2);~
+the constructor creates a new obj and assigns it's instance variables to parameter values and assings the obj a instance_name.
+by using ~this~ progarmmer can use same name for parameters and instance variables.
+
+**** Getters and Setters
+getter - method which is used to retrive value of an instance variable.
+setter - method which is used to modifiy the value of an instance variable.
+names of getters begin with get and setters begin with set.for getters which are
+predicate methods(return a bool) name begins with is.
+
+**** toString method
+when java needs to convert an obj to string , it does so by called the obj's toString method.supplying toSting in class takes precedence over Object class implementation this is called *overrinding*.
+
+**** exporting named constants
+named constants can be exported because they can't be changed and allow be modifieid from a single place other classes may used a named constant by :
+Class_name.namedconstant.
+
+*** 6.5 Rational numbers
+classes that don't allow clients to change any property of object once it has been created are called immutable.
+*** 6.6 Extending existing classes
+**** Rules for inherited constructors
+- classes with an explicit call to this invoke one of the other constructors for this class delegating responsibility to that constructor for making sure superclass constructor gets called.
+- classes that begin with an explicit call to super invoke the constructor in the superclass that matches the argument list provided.
+- classes that begin with no call to either super or this invoke the default super class constructor with no arguments.
+
+ Java automatically defines the default constructor with an empty body if class fails to define it's default constructor.however default constructor is not created if class has other constructors,in such cases constructors for any subclasses must make explicit calls to one of the constructors in their superclass.
+
+**** Rules of inherited methods
+when a method call takes place , the java compiler looks method definition in the lowest subclass first and the moves towards superclasses until it find a definition or discovers no such methods exist.
+
+overrinding methods can break method implementations , so it's only advised when designers of class reccommed it.
+super can be used as a reciver arg to call superclass methods.eg;
+~super.init();~
+
+
+** Chapter 9  Object Orinted Graphics
+*** 9.1 ~acm.graphics~ model
+These ideas that define the appropriate mental picture for a package are called a *model* .
+
+Coordinate positions and lengths are expressed in terms of pixels.
+Points on screen are expressed in terms of x,y coordinate the x coordinate is same as cartesian system but y coordinate is inverted.
+origin (0,0) is in upper left corner of screen.
+
+acm.graphics package uses collage model to describe an image,back-to front ordering of objects in the collage is called the stacking order which is also called *z-ordering* based on stacking is done in z-axis.
+
+*** 9.2 Structure of the ~acm.graphics~ package
+**** ~GCanvas~ class
+The GCanvas class is a sub-class of the ~java.awt.container~ class,
+a GCanvas object is the background on with graphics objects are
+drawn. 
+~GraphicsProgram~ class automaticall creates a GCanvas object and fits it to the window.
+~GraphicsProgram~ class simply passes the method calls along to the underlying GCanvas which implements the actual operation, this process is called *forwarding*.
+*Useful ~GCanvas~ methods*   
+ - void add(GObject gobj)
+  add graphical object to the canvas at it's internally stored location.
+- void add(GObject gobj , double x , double y)
+  adds graphical object to the canvas at x,y coordinates.
+- void remove(GObject gobj)
+- void removeAll()
+- GObject getElementAt(double x, double y)
+- void pause(double milliseconds)
+- void WaitForClick()
+- int getWidth()
+- int getHeight()
+- void setBackground(Color bg)
+
+GCanvas extends a Container class which is a part of java.awt package which exetends a Component class which allows the GCanvas to be displayed in a window.
+getWidth,getHeight methods are defined in Component class.
+
+***** details about ~Color~ class
+color class uses the RGB model to define a color as a composit of Red, Green,
+and Blue. The value of  red,green and blue is defined by a int in range 0 - 255.
+given a color object you can call getters getRed,getGreen and getBlue to know each of it's RGB values.
+
+
+
+
+
+***** The ~GPoint,GDimention~ and ~GRectangle~ classes
+acm.graphics implements the GPoint,GRectangle and GPoint classes to encapsulate data , one of the advantages of encapsulation is that objects can be passed from one method to another as  a single entity.
+
+
+***** The ~GMath~ class
+The GMath class defines simple mathematical methods because the java.Math class uses radians for angles while the java's graphics system uses degrees for angle representation.
+
+all methods of GMath class are also static ( GMath.cos(k);)
+- distance and angle method convert cartisian coordinates to polar coordinates and represent in r,theta.
+- round method rounds a double to the nearest int.
+
+  
+***** The ~GObject~ class and it's  subclasses
+The GObject class is an abstract class in acm.graphics package,
+hence it cant be instanciated .
+GObject represents an object that you can add to a GCanvas.
+However it a subclass object can be assigned to a GObject variable.
+A number of methods are also implemented by GObject class.
+[[https://cs.stanford.edu/people/eroberts/jtf/javadoc/student/acm/graphics/GObject.html][GObject Javadoc]]
+
+*Interfaces*
+A interface is a listing of methods that a set of classes share.
+a java class that exports all the methods of an interface is said
+to *implement* that interface.
+
+*GFillable* interface is implemented by :- GOval GRect GPolygon GArc
+
+*GResizeable* , *GScalable*
+
+
+*** 9.3 Using the shape classes
+**** Class ~GLable~
+[[https://cs.stanford.edu/people/eroberts/jtf/javadoc/student/acm/graphics/GLabel.html][(JavaDoc)]] The GLabel class uses the typesetting system as it's
+graphical model.
+In Typesetting graphical model a font is represented in terms of :
+- The baseline is the imaginary line on which charaters sit.
+  origin is the point at which text of label begins.
+- height of the font is the distance between successive baselines.
+- asent of a font is the maximum distance charaters extend obove the baseline.
+- desent is the maximum distance charaters extend below the baseline.
+There are two constructors of GLable one uses coordinates and other is used to be created without coordinates and the added using add() with calculated coordinates.
+**** Class ~GRect~
+[[https://cs.stanford.edu/people/eroberts/jtf/javadoc/student/acm/graphics/GRect.html][JavaDoc]] The GRect class also has two constructors (one with coordinates and one without coordinates)
+GRect implements all three interfaces GFillable,GResizeable and GScalable.
+It also implements sub-classes G3DRect which gives rects with shaded border for 3d effect, and GRoundRect with rounded rects
+**** Class ~GLine~
+[[https://cs.stanford.edu/people/eroberts/jtf/javadoc/student/acm/graphics/GLine.html][JavaDoc]] The GLine class produces a line , it implements GScaleble interface.
+In this class contains() is avilabe and considers a point close enough to be a part of the line and contained in the line ,
+that distance is set by constant LINE_TOLRANCE in GLine and is set to pixel and a half.
+**** Class ~GArc~
+[[https://cs.stanford.edu/people/eroberts/jtf/javadoc/student/acm/graphics/GArc.html][JavaDoc]] This class is used to display an arc.It is specified by location of the rectange which contains the oval of which the arc is part of .
+angle is specifed by startangle() and sweepangle() counter clockwise from x+.
+GArc also implements GFillable to produce pie grams.
+For an unfilled arc containment implies point is on arc or within
+LINE_TOLERANCE however for a filled arc containment implies that point lies in the wedge region.
+GArc also implement GScalable.
+**** Class ~GImage~
+[[https://cs.stanford.edu/people/eroberts/jtf/javadoc/student/acm/graphics/GImage.html][JavaDoc]] This class is used to display an images stored in a file encoded in standard image encoding formats.
+Image needs to be stored in the same directory as java program or in a subdirectory of that directory called images.
+eg :-
+~public void run() {~
+    ~add(new GImage("Myimage.gif"));~
+~}~
+if one of the classes of acm.program package is used program classes intialization checks weather this particular class defines constants APPLICATION_WIDTH and APPLICATION_HEIGHT if so then it uses those constants to set the dimentions of window.
+
+*Scalling*
+GImage also implements GResizeable and GScallable however for most images scalling only works if it's scaled in both directions
+by the same factor so that it preserves the aspect ratio.
+**** Class ~GPolygon~
+[[https://cs.stanford.edu/people/eroberts/jtf/javadoc/student/acm/graphics/GPolygon.html][Java Doc]] This class displays a polygon. Line segments which that form the outline of the polygone are called edges and the point at which edges meet is called a vertex.
+
+The GPolygone constructor creates an empty GPolygon that contains no vertices.
+There are two constructors one creates GPolygon at origin , other one creates at argument x,y.
+Programmer defines a reference point which is defined as the location of the polygon as a whole.
+Coordinates of the vertices are defined in term of their location relative to the reference point using addVertex().
+Vertexes can also be added with other vertexes as reference using addEdge().
+
+GPolygon implements GFilleable and GScalable interfaces.
+
+
+*** 9.4 Creating compound objects
+[[https://cs.stanford.edu/people/eroberts/jtf/javadoc/student/acm/graphics/GCompound.html][Java Doc GCompound]] The GCompound class allows creation of a
+compound GObject using several different GObjects.
+To use GCompound , create a class extending GCompound , whose constructor initializese different component GObjects.
+
+the add() method in GCompound is different that add() in GraphicsProgram. It adds components to the class extending GObject not GCanvas and it adds them w.r.t the class extending GCompound.all of the component GObjects are expressed in terms of the unit GCompound .
+
+*GCompound coordinate system*
+GCompound class defines it's own coordinate system w.r.t it's own refrence point.
+getCanvasPoint() getLocalPoint() help in conversion w.r.t GCanvas.
+
+*Object Decomposition Using GCompound*
+
+
+
+
+** Chapter 10 Event Driven Programs
+
+Interaction in which user action is synchronized with program operation is called *Synchronous* interaction.
+Interaction in which user can intercede at any point is called *Asynchronous* interaction in these type of interactions user can trigger an action which the help of a mouse. These actions are called *Events*.
+Interactive Programs which operate by responding to these events are called *event-driven*
+Most event-driven program have a Graphical User Interface (GUI)
+which allows users to interact which program using interactive components called *interactors* such as buttons,fields etc.
+
+
+*** 10.1 The Java event model
+
+In java an event is repesented by an object which is a sub-class of
+*Event-Object* class in java.util package.
+In ACM library  there are following event Classes :-
+- MouseEvent for events triggered by mouse.
+- KeyEvent for events triggered by key press on keyboard.
+- ActionEvent for event triggered using GUI.
+
+in java event objects do not perform any actions them selfs,
+they are deliviered to another object which is charged with
+responding to the event.
+
+The object which is charged with responding to a eventobject is called a Listener. Each EventObject requires a specific type of Listener Object.
+Listener Object are not defined as classes but rather as interfaces
+any class that provides the definitions of the methods defined in an
+interface can declare that it implements the interface using the
+*implements* keyword in class header.
+~public class myprogram extends GraphicsProgram implements MouseListener~
+
+acm.program.Program class defines itself to be listner for mouse,key and action.But actual method definitions do nothing
+and have to ovverriden.
+EventObject classes are imported from ~java.awt.event.*;~
+
+*** 10.2 A simple event driven program
+
+The ~init()~ method is used to intialize the code that needs to execute before program starts.
+addMouseListeners(); registers the program as a listener for all mouse events.
+mouseClicked recives MouseEvent object as parameter which store
+event related information such as coordinates which is accessed with MouseEvent.getX() and MouseEvent.gety().
+
+*** 10.3 Responding to mouse events
+[[https://cs.stanford.edu/people/eroberts/jtf/javadoc/student/acm/program/Program.html][acm.program.Program JavaDoc]]
+
+*The MouseListener and MouseMotionListener Interfaces*
+
+MouseListener listens to mouse events which involve mouse buttons while MouseMotionListener listens to mouse movements.
+~addMouseListeners()~ adds listeners from both types.
+
+*Overrinding Listener methods*
+mouseListener and mouseMotionListener methods defined in
+~acm.program.Program~  are empty definitions and need to be overriden.Event classes are defined in java window toolkit system
+java.awt.event.
+MouseEvent 's method e.getx() and e.getY() return the coordinates where mouse event has occured.
+
+*A line-drawing program*
+*rubber-banding* is the effect which the line currently being drawn streches contrancts as the mouse moves.
+mousePressed() method creates a new GLine whose start point and endpoint are the current mouse position.
+mousedragged() method resets the GLine's endpoint to the current mouse position.
+
+*Dragging objects on canvas*
+
+Java runtime generates mousePressed and mouseReleased events in conjunction with mouseClicked and they both preced mouseClicked event.
+
+*** 10.4 Responding to keyboard events
+Keyboard generates *KeyEvent* which delivered to KeyListener.
+addKeyListeners() is used to registers program as key listener.
+KeyEvent listeners are KeyPressed,KeyReleased and KeyTyped
+
+For KeyPressed and KeyReleased methods getKeyCode() returns a
+*virtual key* key code which is an integer value which are defined in KeyEvent class.
+For KeyTyped event getKeyChar() returns character which was pressed and takes in account modifer keys such as SHIFT.
+
+
+** Chapter 8 Strings and Charaters
+
+*** 8.1 The principle of enumeration
+The process of listing all the elements in the domain of a type is called enumeration.
+A type defined by listing all of it's elements is called enumerated type.
+
+*Representing enumerated types inside the machine.*
+
+The process of assigning an interger to each element of an enumerated type is called integer encoding the integer acts as a coded representation of the original value.
+
+*Representation enumerated types as integers*
+
+In java enumerated types can be used with enumerated values defined as named constants.
+
+*Defining new enumerated types*
+#+begin_src java
+  access enum name{
+      elements
+      }
+#+end_src
+
+access is either  pubilc or empty.
+name is name of the new type.
+elements is a list of names used to refer to the individual valuees that compries the enumerated type.The elements in the list are seperated by commas.
+
+To use an enumerated type constant in you program you need to name of the enumerated type as the qualifier.
+eg :- ~Direction dir = Direction.NORTH;~
+
+This is true for all contexts except a switch statement, java requires you to use
+the unqualified element names in the case clauses.
+eg
+#+begin_src java
+  private boolean isWeekendDay(Weekday day){
+      switch(day){
+          case SATURDAY: case SUNDAY : return true;
+          default: return false;
+              }
+      }
+#+end_src
+
+*** 8.2 Characters
+
+A *Scalar type* is any type that can be interpreted is an integer.
+
+*The data type char*
+In java the data type *char* is the used to represent single charaters.Like all
+predefined data types char has a set of legal values and a set of operations.
+char is also a scalar type hence integer operation can also be applied to chars.
+
+*THe ASCII and Unicode coding systems*
+Both ascii and unicode are charater encoding systems but , ascii
+only english based , older Unicode is includes more languages and modern.
+- important facts:
+  - both acii and unicode encode english alphabet in alphabetical
+    order and  ascii froms the first 187 charaters of unicode.
+  - adding or subtracting n from a charater gives a charater n postions before or after that charater.
+  - comparing one charaters with another gives alphabetical ordering.
+
+ *Useful methods in charater class*
+[[https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html][java.lang.Charater JAvadoc]]
+
+*Control statements using charaters*
+Because char is a scalar type then a char can be used in control statements.
+~for(char ch = 'A';ch<'z';ch++)~
+~switch(ch)~
+~case a:case e: case u: return true;~
+
+*** 8.3 Strings as an abstract idea
+
+A sequence of charaters is called a string.It's implemented by
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html][java.lang.String]] 
+
+
+*the notion of an abstract type*
+In java abstract types are comprised using class definitions that specify operations which can be preformed on the object of that type, these operations are called *primitive operations* and are public.
+
+The details of implementation of primitive operation and the underlying representation of strings are hidden in class definition and client programmer does not need to understarnd those in order to work with strings this is the realisation of the principle of  *data abstraction*.
+
+*** 8.4 Using the methods in the String class
+
+The String class is immutable (it does not change the internal state of the data.
+eg : ~str= str.toLowerCase();~ returns a *new* string which is lower case str.
+str.toLowerCase(); alone does not work.
+
+*Determining the length of  a string*
+
+The length of a string is defined as the number of charaters in the string.
+str.lenght() returns length.
+
+*selecting charaters from a string*
+In java strings are indexed starting from 0 and method charAt()  returns the character at that position.
+eg:-~charAt(index);~
+*Concatination*
+Joining of two strings end to end is called concatination.Two strings can be concatenated with the method ~str.concat("string");~ or using the + operator.
+string with zero charaters is called empty string and is represented using "".
+
+
+*Extracting parts of a string*
+a string which is part of a larger string is called a substring . to extract a substring java provides str.substring(p1,p2) method which p1 and p2 are index positions and returns a substring starting from p1 upto p2 but not including p2. the second index is optional and if missing the substring returned is from p1 to ending character.
+*comparing one string with another*
+The string class defines equals method to test equality , but == only testes weather two objects are the same not if the have same value.
+equalsIgnoreCase checks equality without case.
+compareTo returns a -ve int if s1 preceds s2
+                                         +ev int if s2 preceds s1
+                                         0 if they are same.
+compareTo considers lexicographic order ie order in which unicode stores the characters and compares starting from first character each.
+*searching within a string*
+indexOf(search); method searches search in the given string. if character /substring is found indexof returns index if not then -1. the second argument takes a index as a seach start point.
+
+~startsWith()~ returns true if the arg substring is in begining of the given string.
+~endWith()~ has similar behaviour for string end.
